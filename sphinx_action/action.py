@@ -131,8 +131,12 @@ def build_docs(build_command, docs_directory):
             build_command + shlex.split(sphinx_options), cwd=docs_directory
         )
 
-    with open(log_file, "r") as f:
-        annotations = parse_sphinx_warnings_log(f.readlines())
+    try:
+        with open(log_file, "r") as f:
+            annotations = parse_sphinx_warnings_log(f.readlines())
+    except FileNotFoundError:
+        # No log written, probably some wider error
+        annotations = []
 
     return return_code, annotations
 
