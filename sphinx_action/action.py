@@ -3,6 +3,7 @@ import subprocess
 import tempfile
 import os
 import shlex
+import sys
 
 from sphinx_action import status_check
 
@@ -146,6 +147,7 @@ def build_all_docs(github_env, docs_directories):
         raise ValueError("Please provide at least one docs directory to build")
 
     build_success = True
+    return_code = 0
     warnings = 0
 
     for docs_dir in docs_directories:
@@ -167,5 +169,4 @@ def build_all_docs(github_env, docs_directories):
     )
     print(status_message)
 
-    if not build_success:
-        raise RuntimeError("Build failed")
+    sys.exit(return_code)
