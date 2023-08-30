@@ -123,13 +123,16 @@ def build_docs(build_command, docs_directory):
             build_command,
             env=dict(os.environ, SPHINXOPTS=sphinx_options),
             cwd=docs_directory,
+            stderr=subprocess.STDOUT,
         )
     else:
         build_command += shlex.split(sphinx_options)
         print("[sphinx-action] Running: {}".format(build_command))
 
         return_code = subprocess.call(
-            build_command + shlex.split(sphinx_options), cwd=docs_directory
+            build_command + shlex.split(sphinx_options),
+            cwd=docs_directory,
+            stderr=subprocess.STDOUT,
         )
 
     try:
